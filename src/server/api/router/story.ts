@@ -1,3 +1,4 @@
+import { NOT_FOUND_ERROR } from "@/lib/error-message"
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc"
 import { getStories, getStoryByUuid } from "@/server/database/query/story"
 import { TRPCError } from "@trpc/server"
@@ -18,7 +19,7 @@ export const storyRouter = createTRPCRouter({
 				(data) => {
 					if (!data) {
 						throw new TRPCError({
-							code: "NOT_FOUND",
+							code: NOT_FOUND_ERROR,
 							message: "Story not found"
 						})
 					}
