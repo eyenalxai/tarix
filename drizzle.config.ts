@@ -2,7 +2,10 @@ import { defineConfig } from "drizzle-kit"
 
 export default defineConfig({
 	dialect: "postgresql",
-	schema: ["./src/lib/database/schema.ts", "./src/lib/database/auth-schema.ts"],
+	schema: [
+		"./src/server/database/schema.ts",
+		"./src/server/database/auth-schema.ts"
+	],
 	out: "./drizzle",
 	dbCredentials: {
 		// biome-ignore lint/style/noNonNullAssertion: This will be only run locally
