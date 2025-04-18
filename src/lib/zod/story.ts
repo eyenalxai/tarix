@@ -1,4 +1,9 @@
-import type { StoryInsert, StorySelect } from "@/server/database/schema"
+import { sceneSchema } from "@/lib/zod/scene"
+import type {
+	SceneSelect,
+	StoryInsert,
+	StorySelect
+} from "@/server/database/schema"
 import { z } from "zod"
 
 const storyBaseSchema = z.object({
@@ -16,6 +21,10 @@ export const storySchema = storyBaseSchema.partial().required({
 	description: true,
 	createdAt: true
 }) satisfies z.ZodType<StorySelect>
+
+export const storyWithScenesSchema = storySchema.extend({
+	scenes: z.array(sceneSchema)
+}) satisfies z.ZodType<StorySelect & { scenes: SceneSelect[] }>
 
 export const storyInsertSchema = storyBaseSchema.pick({
 	description: true,

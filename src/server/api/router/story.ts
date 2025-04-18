@@ -1,6 +1,10 @@
 import { NOT_FOUND_ERROR } from "@/lib/error-message"
 import { parseZodSchema } from "@/lib/zod/parse"
-import { storiesSchema, storyInsertSchema, storySchema } from "@/lib/zod/story"
+import {
+	storiesSchema,
+	storyInsertSchema,
+	storyWithScenesSchema
+} from "@/lib/zod/story"
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc"
 import {
 	getStories,
@@ -31,7 +35,7 @@ export const storyRouter = createTRPCRouter({
 								message: "Story not found"
 							})
 
-						return parseZodSchema(storySchema, data).match(
+						return parseZodSchema(storyWithScenesSchema, data).match(
 							(data) => data,
 							(error) => {
 								throw new TRPCError({
