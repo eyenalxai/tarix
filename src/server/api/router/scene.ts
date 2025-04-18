@@ -10,16 +10,15 @@ import { TRPCError } from "@trpc/server"
 import { z } from "zod"
 
 export const sceneRouter = createTRPCRouter({
-	insert: protectedProcedure
-		.input(sceneInsertSchema)
-		.mutation(async ({ ctx, input }) => {
+	insert: protectedProcedure.input(sceneInsertSchema).mutation(
+		async ({ ctx, input }) =>
 			await insertScene(ctx.db, input).match(
 				(data) => data,
 				(error) => {
 					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })
 				}
 			)
-		}),
+	),
 	setActions: protectedProcedure
 		.input(
 			z.object({
@@ -27,14 +26,18 @@ export const sceneRouter = createTRPCRouter({
 				actions: actionsSchema
 			})
 		)
-		.mutation(async ({ ctx, input }) => {
-			await setActions(ctx.db, input).match(
-				() => "OK",
-				(error) => {
-					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })
-				}
-			)
-		}),
+		.mutation(
+			async ({ ctx, input }) =>
+				await setActions(ctx.db, input).match(
+					() => "OK",
+					(error) => {
+						throw new TRPCError({
+							code: "INTERNAL_SERVER_ERROR",
+							message: error
+						})
+					}
+				)
+		),
 	setSelectedAction: protectedProcedure
 		.input(
 			z.object({
@@ -42,12 +45,16 @@ export const sceneRouter = createTRPCRouter({
 				selectedAction: selectedActionSchema
 			})
 		)
-		.mutation(async ({ ctx, input }) => {
-			await setSelectedAction(ctx.db, input).match(
-				() => "OK",
-				(error) => {
-					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })
-				}
-			)
-		})
+		.mutation(
+			async ({ ctx, input }) =>
+				await setSelectedAction(ctx.db, input).match(
+					() => "OK",
+					(error) => {
+						throw new TRPCError({
+							code: "INTERNAL_SERVER_ERROR",
+							message: error
+						})
+					}
+				)
+		)
 })
