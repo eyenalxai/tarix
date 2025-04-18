@@ -40,3 +40,7 @@ export const scenesRelations = relations(scenes, ({ one }) => ({
 		references: [stories.uuid]
 	})
 }))
+
+export const storiesRelations = relations(stories, ({ many }) => ({
+	scenes: many(scenes)
+}))
