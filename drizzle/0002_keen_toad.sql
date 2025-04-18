@@ -1,0 +1,1 @@
+ALTER TABLE "scenes" ALTER COLUMN "actions" DROP NOT NULL;

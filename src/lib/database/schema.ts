@@ -27,7 +27,7 @@ export const scenes = pgTable("scenes", {
 		.default(sql`now()`)
 		.notNull(),
 	text: text("text").notNull(),
-	actions: text("actions").array().notNull(),
+	actions: text("actions").array(),
 	selectedActionIndex: integer("selected_action_index")
 })
 

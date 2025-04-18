@@ -21,7 +21,8 @@ export const sceneSchema = z.object({
 	text: z.string().min(1, "Scene text is required"),
 	actions: z
 		.array(z.string().min(1, "Action cannot be empty"))
-		.min(1, "At least one action is required"),
+		.min(1, "At least one action is required")
+		.optional(),
 	selectedActionIndex: z.number().int().nonnegative().optional()
 }) satisfies z.ZodType<SceneInsert>
 
