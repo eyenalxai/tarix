@@ -2,7 +2,7 @@
 
 import { api } from "@/components/trpc-provider"
 
-export const Story = (props: { uuid: string }) => {
+export const StoryLoader = (props: { uuid: string }) => {
 	const { data, isPending, error } = api.story.getStoryByUuid.useQuery({
 		uuid: props.uuid
 	})

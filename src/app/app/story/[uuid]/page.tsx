@@ -1,11 +1,9 @@
-import { Story } from "@/components/story"
+import { StoryLoader } from "@/components/story"
 
-export default async function StoryPage({
-	params
-}: {
+export default async function Story(props: {
 	params: Promise<{ uuid: string }>
 }) {
-	const { uuid } = await params
+	const { uuid } = await props.params
 
-	return <Story uuid={uuid} />
+	return <StoryLoader uuid={uuid} />
 }
