@@ -7,6 +7,7 @@ export const stories = pgTable("stories", {
 	userId: text("userId")
 		.notNull()
 		.references(() => users.id),
+	description: text("description").notNull(),
 	createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
 		.default(sql`now()`)
 		.notNull()

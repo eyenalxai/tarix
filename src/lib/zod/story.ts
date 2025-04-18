@@ -6,6 +6,7 @@ export const storySchema = z.object({
 	uuid: z.string().uuid().optional(),
 	userId: z.string().min(1, "User ID is required"),
 	createdAt: z.date().optional(),
+	description: z.string().min(1, "Description is required"),
 	scenes: z.array(sceneSchema).optional()
 }) satisfies z.ZodType<StoryInsert>
 
