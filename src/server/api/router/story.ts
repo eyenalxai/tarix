@@ -22,25 +22,31 @@ export const storyRouter = createTRPCRouter({
 				await getStoryByUuid(ctx.db, {
 					uuid: input.uuid,
 					userId: ctx.session.user.id
-				})
-					.andThen((data) => parseZodSchema(storySchema, data))
-					.match(
-						(data) => {
-							if (!data)
-								throw new TRPCError({
-									code: NOT_FOUND_ERROR,
-									message: "Story not found"
-								})
-
-							return data
-						},
-						(error) => {
+				}).match(
+					(data) => {
+						if (!data)
 							throw new TRPCError({
-								code: "INTERNAL_SERVER_ERROR",
-								message: error
+								code: NOT_FOUND_ERROR,
+								message: "Story not found"
 							})
-						}
-					)
+
+						return parseZodSchema(storySchema, data).match(
+							(data) => data,
+							(error) => {
+								throw new TRPCError({
+									code: "INTERNAL_SERVER_ERROR",
+									message: error
+								})
+							}
+						)
+					},
+					(error) => {
+						throw new TRPCError({
+							code: "INTERNAL_SERVER_ERROR",
+							message: error
+						})
+					}
+				)
 		),
 	getStories: protectedProcedure.query(
 		async ({ ctx }) =>
