@@ -1,5 +1,6 @@
 import { NOT_FOUND_ERROR } from "@/lib/error-message"
-import { storySchema } from "@/lib/zod/story"
+import { parseZodSchema } from "@/lib/zod/parse"
+import { storyInsertSchema, storySchema } from "@/lib/zod/story"
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc"
 import {
 	getStories,
@@ -21,23 +22,25 @@ export const storyRouter = createTRPCRouter({
 				await getStoryByUuid(ctx.db, {
 					uuid: input.uuid,
 					userId: ctx.session.user.id
-				}).match(
-					(data) => {
-						if (!data)
-							throw new TRPCError({
-								code: NOT_FOUND_ERROR,
-								message: "Story not found"
-							})
+				})
+					.andThen((data) => parseZodSchema(storySchema, data))
+					.match(
+						(data) => {
+							if (!data)
+								throw new TRPCError({
+									code: NOT_FOUND_ERROR,
+									message: "Story not found"
+								})
 
-						return data
-					},
-					(error) => {
-						throw new TRPCError({
-							code: "INTERNAL_SERVER_ERROR",
-							message: error
-						})
-					}
-				)
+							return data
+						},
+						(error) => {
+							throw new TRPCError({
+								code: "INTERNAL_SERVER_ERROR",
+								message: error
+							})
+						}
+					)
 		),
 	getStories: protectedProcedure.query(async ({ ctx }) => {
 		return await getStories(ctx.db, { userId: ctx.session.user.id }).match(
@@ -47,7 +50,7 @@ export const storyRouter = createTRPCRouter({
 			}
 		)
 	}),
-	insertStory: protectedProcedure.input(storySchema).mutation(
+	insertStory: protectedProcedure.input(storyInsertSchema).mutation(
 		async ({ ctx, input }) =>
 			await insertStory(ctx.db, input).match(
 				(data) => data,

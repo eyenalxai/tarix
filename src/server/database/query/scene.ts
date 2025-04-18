@@ -36,7 +36,7 @@ export const setSelectedAction = (
 	tx: Transaction,
 	props: {
 		storyId: string
-		selectedAction: z.infer<typeof selectedActionSchema>
+		selectedAction: number
 	}
 ) => {
 	const result = parseZodSchema(selectedActionSchema, props.selectedAction)

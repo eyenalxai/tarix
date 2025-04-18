@@ -1,4 +1,4 @@
-import { StoryLoader } from "@/components/story"
+import { StoryLoader } from "@/components/story/story-loader"
 
 export default async function Story(props: {
 	params: Promise<{ uuid: string }>

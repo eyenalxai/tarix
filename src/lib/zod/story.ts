@@ -1,13 +1,23 @@
-import { sceneSchema } from "@/lib/zod/scene"
-import type { StoryInsert } from "@/server/database/schema"
+import type { StoryInsert, StorySelect } from "@/server/database/schema"
 import { z } from "zod"
 
-export const storySchema = z.object({
-	uuid: z.string().uuid().optional(),
-	userId: z.string().min(1, "User ID is required"),
-	createdAt: z.date().optional(),
-	description: z.string().min(1, "Description is required"),
-	scenes: z.array(sceneSchema).optional()
+const storyBaseSchema = z.object({
+	uuid: z.string().uuid(),
+	userId: z.string(),
+	description: z.string(),
+	createdAt: z.date()
+})
+
+export const storySchema = storyBaseSchema.partial().required({
+	uuid: true,
+	userId: true,
+	description: true,
+	createdAt: true
+}) satisfies z.ZodType<StorySelect>
+
+export const storyInsertSchema = storyBaseSchema.pick({
+	userId: true,
+	description: true
 }) satisfies z.ZodType<StoryInsert>
 
 export const storiesSchema = z.array(storySchema)
