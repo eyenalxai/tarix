@@ -12,7 +12,10 @@ import { z } from "zod"
 export const sceneRouter = createTRPCRouter({
 	insert: protectedProcedure.input(sceneInsertSchema).mutation(
 		async ({ ctx, input }) =>
-			await insertScene(ctx.db, input).match(
+			await insertScene(ctx.db, {
+				...input,
+				userId: ctx.session.user.id
+			}).match(
 				(data) => data,
 				(error) => {
 					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })

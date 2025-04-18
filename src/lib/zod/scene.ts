@@ -43,11 +43,10 @@ export const sceneSchema = sceneBaseSchema.required({
 
 export const sceneInsertSchema = sceneBaseSchema
 	.pick({
-		userId: true,
 		storyUuid: true,
 		text: true
 	})
 	.extend({
 		actions: z.array(z.string()).optional(),
 		selectedAction: z.number().optional()
-	}) satisfies z.ZodType<SceneInsert>
+	}) satisfies z.ZodType<Omit<SceneInsert, "userId">>

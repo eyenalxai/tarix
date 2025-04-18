@@ -16,8 +16,7 @@ export const storySchema = storyBaseSchema.partial().required({
 }) satisfies z.ZodType<StorySelect>
 
 export const storyInsertSchema = storyBaseSchema.pick({
-	userId: true,
 	description: true
-}) satisfies z.ZodType<StoryInsert>
+}) satisfies z.ZodType<Omit<StoryInsert, "userId">>
 
 export const storiesSchema = z.array(storySchema)

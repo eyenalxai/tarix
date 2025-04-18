@@ -58,7 +58,10 @@ export const storyRouter = createTRPCRouter({
 	),
 	insertStory: protectedProcedure.input(storyInsertSchema).mutation(
 		async ({ ctx, input }) =>
-			await insertStory(ctx.db, input).match(
+			await insertStory(ctx.db, {
+				...input,
+				userId: ctx.session.user.id
+			}).match(
 				(data) => data,
 				(error) => {
 					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })
