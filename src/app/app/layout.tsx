@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 						className={cn("bg-sidebar", "cursor-pointer", "size-8")}
 					/>
 				</div>
-				<main className={cn("p-4 container mx-auto max-w-3xl")}>
+				<main className={cn("p-4 container mx-auto max-w-3xl mt-12")}>
 					{children}
 				</main>
 			</SidebarInset>
