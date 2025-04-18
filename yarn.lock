@@ -5155,13 +5155,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ky@npm:^1.8.1":
-  version: 1.8.1
-  resolution: "ky@npm:1.8.1"
-  checksum: 10c0/48ab4b348dd7d8c6aa0f82df76fa32e99ade3c5513d50f58b0db5b945146deb6d8c18b2a61a0655b08385efa04b3bf1ed4098fff0329e3bd6c670c8a88668d9f
-  languageName: node
-  linkType: hard
-
 "kysely@npm:^0.27.6":
   version: 0.27.6
   resolution: "kysely@npm:0.27.6"
@@ -5653,7 +5646,6 @@ __metadata:
     eslint-config-next: "npm:15.3.1"
     eslint-plugin-tailwindcss: "npm:^3.18.0"
     geist: "npm:^1.3.1"
-    ky: "npm:^1.8.1"
     lucide-react: "npm:^0.492.0"
     neverthrow: "npm:^8.2.0"
     next: "npm:^15.3.1"
