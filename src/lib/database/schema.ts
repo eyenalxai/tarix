@@ -1,21 +1,42 @@
 import { users } from "@/lib/database/auth-schema"
-import { sql } from "drizzle-orm"
-import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { relations, sql } from "drizzle-orm"
+import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 
-export const configs = pgTable(
-	"configs",
-	{
-		uuid: uuid("uuid").default(sql`gen_random_uuid()`).primaryKey(),
-		createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
-			.default(sql`now()`)
-			.notNull(),
-		userId: text("userId")
-			.notNull()
-			.references(() => users.id),
-		locale: text("locale").notNull()
-	},
-	(table) => [unique("unique_config_userId").on(table.userId)]
-)
+export const stories = pgTable("stories", {
+	uuid: uuid("uuid").default(sql`gen_random_uuid()`).primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => users.id),
+	createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
+		.default(sql`now()`)
+		.notNull()
+})
 
-export type ConfigSelect = typeof configs.$inferSelect
-export type ConfigInsert = typeof configs.$inferInsert
+export type StorySelect = typeof stories.$inferSelect
+export type StoryInsert = typeof stories.$inferInsert
+
+export const scenes = pgTable("scenes", {
+	uuid: uuid("uuid").default(sql`gen_random_uuid()`).primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => users.id),
+	storyUuid: uuid("storyId")
+		.notNull()
+		.references(() => stories.uuid),
+	createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
+		.default(sql`now()`)
+		.notNull(),
+	text: text("text").notNull(),
+	actions: text("actions").array().notNull(),
+	selectedActionIndex: integer("selected_action_index")
+})
+
+export type SceneSelect = typeof scenes.$inferSelect
+export type SceneInsert = typeof scenes.$inferInsert
+
+export const scenesRelations = relations(scenes, ({ one }) => ({
+	story: one(stories, {
+		fields: [scenes.storyUuid],
+		references: [stories.uuid]
+	})
+}))
