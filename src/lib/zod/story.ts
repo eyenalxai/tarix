@@ -4,7 +4,9 @@ import { z } from "zod"
 const storyBaseSchema = z.object({
 	uuid: z.string().uuid(),
 	userId: z.string(),
-	description: z.string(),
+	description: z
+		.string()
+		.min(2, "Description must be at least 2 characters long"),
 	createdAt: z.date()
 })
 
