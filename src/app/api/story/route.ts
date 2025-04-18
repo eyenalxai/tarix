@@ -39,6 +39,7 @@ export const GET = async (request: NextRequest) => {
 		.match(
 			(story) => NextResponse.json(story, { status: 200 }),
 			(e) => {
+				console.error(e)
 				if (e === storyNotFoundError)
 					return new NextResponse("Story not found", { status: 404 })
 				return new NextResponse(e, { status: 400 })

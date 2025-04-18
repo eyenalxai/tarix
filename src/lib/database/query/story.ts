@@ -25,3 +25,9 @@ export const getStoryByUuid = (props: {
 		if (!story) return errAsync(storyNotFoundError)
 		return okAsync(story)
 	})
+
+export const getStories = (props: { userId: string }) =>
+	ResultAsync.fromPromise(
+		db.query.stories.findMany({ where: eq(stories.userId, props.userId) }),
+		(e) => getErrorMessage(e, "Failed to get stories")
+	)

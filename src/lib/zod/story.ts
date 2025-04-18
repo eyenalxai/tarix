@@ -31,3 +31,5 @@ export const storySchema = z.object({
 	createdAt: z.date().optional(),
 	scenes: z.array(sceneSchema).optional()
 }) satisfies z.ZodType<StoryInsert>
+
+export const storiesSchema = z.array(storySchema)
