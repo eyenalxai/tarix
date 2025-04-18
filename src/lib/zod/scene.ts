@@ -1,4 +1,4 @@
-import type { SceneInsert } from "@/lib/database/schema"
+import type { SceneInsert } from "@/server/database/schema"
 import { z } from "zod"
 
 export const choiceSchema = z.object({
@@ -31,4 +31,14 @@ export const sceneSchema = z.object({
 	text: z.string().min(1, "Scene text is required"),
 	actions: actionsSchema.optional(),
 	selectedAction: selectedActionSchema.optional()
+}) satisfies z.ZodType<SceneInsert>
+
+export const sceneInsertSchema = z.object({
+	uuid: z.string().uuid().optional(),
+	userId: z.string(),
+	storyUuid: z.string().uuid(),
+	createdAt: z.date().optional(),
+	text: z.string(),
+	actions: z.array(z.string()).optional(),
+	selectedAction: z.number().optional()
 }) satisfies z.ZodType<SceneInsert>

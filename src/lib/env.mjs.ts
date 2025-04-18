@@ -12,7 +12,10 @@ export const env = createEnv({
 				message: "OPENAI_API_KEY must start with 'sk-'"
 			}),
 		GITHUB_CLIENT_ID: z.string().min(10),
-		GITHUB_CLIENT_SECRET: z.string().min(10)
+		GITHUB_CLIENT_SECRET: z.string().min(10),
+		NODE_ENV: z
+			.enum(["development", "test", "production"])
+			.default("development")
 	},
 	client: {
 		NEXT_PUBLIC_BETTER_AUTH_URL: z.string().url()
@@ -23,7 +26,8 @@ export const env = createEnv({
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
 		OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 		GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-		GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
+		GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+		NODE_ENV: process.env.NODE_ENV
 	},
 	skipValidation: process.env.BUILD_TIME?.toLowerCase() === "true"
 })

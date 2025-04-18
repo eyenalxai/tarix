@@ -1,4 +1,4 @@
-import { users } from "@/lib/database/auth-schema"
+import { users } from "@/server/database/auth-schema"
 import { relations, sql } from "drizzle-orm"
 import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 

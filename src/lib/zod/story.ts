@@ -1,5 +1,5 @@
-import type { StoryInsert } from "@/lib/database/schema"
 import { sceneSchema } from "@/lib/zod/scene"
+import type { StoryInsert } from "@/server/database/schema"
 import { z } from "zod"
 
 export const storySchema = z.object({

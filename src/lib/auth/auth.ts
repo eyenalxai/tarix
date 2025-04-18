@@ -1,7 +1,7 @@
-import * as authSchema from "@/lib/database/auth-schema"
-import { db } from "@/lib/database/client"
-import * as schema from "@/lib/database/schema"
 import { env } from "@/lib/env.mjs"
+import * as authSchema from "@/server/database/auth-schema"
+import { db } from "@/server/database/client"
+import * as schema from "@/server/database/schema"
 import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 
