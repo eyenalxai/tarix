@@ -24,6 +24,7 @@ export const storyRouter = createTRPCRouter({
 					userId: ctx.session.user.id
 				}).match(
 					(data) => {
+						console.log(data)
 						if (!data)
 							throw new TRPCError({
 								code: NOT_FOUND_ERROR,

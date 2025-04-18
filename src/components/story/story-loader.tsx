@@ -20,10 +20,10 @@ export const StoryLoader = (props: { uuid: string }) => {
 	if (isPending) return <div>Loading...</div>
 	if (error) {
 		if (error.data?.code === NOT_FOUND_ERROR) {
-			return <StoryTinker />
+			return <StoryTinker uuid={props.uuid} />
 		}
 		return <div>Errors: {error.data?.code}</div>
 	}
 
-	return <StoryTinker />
+	return <StoryTinker uuid={props.uuid} story={data} />
 }
