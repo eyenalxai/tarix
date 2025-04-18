@@ -7,13 +7,23 @@ export const storyRouter = createTRPCRouter({
 	getStoryByUuid: protectedProcedure
 		.input(
 			z.object({
-				uuid: z.string(),
-				userId: z.string()
+				uuid: z.string()
 			})
 		)
-		.mutation(async ({ ctx, input }) => {
-			await getStoryByUuid(ctx.db, input).match(
-				(data) => data,
+		.query(async ({ ctx, input }) => {
+			await getStoryByUuid(ctx.db, {
+				uuid: input.uuid,
+				userId: ctx.session.user.id
+			}).match(
+				(data) => {
+					if (!data) {
+						throw new TRPCError({
+							code: "NOT_FOUND",
+							message: "Story not found"
+						})
+					}
+					return data
+				},
 				(error) => {
 					throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error })
 				}

@@ -1,9 +1,11 @@
-export default async function Story({
+import { Story } from "@/components/story"
+
+export default async function StoryPage({
 	params
 }: {
 	params: Promise<{ uuid: string }>
 }) {
 	const { uuid } = await params
 
-	return <div>My Post: {uuid}</div>
+	return <Story uuid={uuid} />
 }
