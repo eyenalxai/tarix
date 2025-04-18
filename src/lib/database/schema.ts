@@ -28,7 +28,7 @@ export const scenes = pgTable("scenes", {
 		.notNull(),
 	text: text("text").notNull(),
 	actions: text("actions").array(),
-	selectedActionIndex: integer("selected_action_index")
+	selectedAction: integer("selected_action")
 })
 
 export type SceneSelect = typeof scenes.$inferSelect

@@ -1,0 +1,1 @@
+ALTER TABLE "scenes" RENAME COLUMN "selected_action_index" TO "selected_action";
