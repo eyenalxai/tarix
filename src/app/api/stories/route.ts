@@ -12,13 +12,11 @@ export const GET = async (request: NextRequest) => {
 	if (!session?.session.userId)
 		return new NextResponse("Forbidden", { status: 403 })
 
-	const searchParams = request.nextUrl.searchParams
-	const uuid = searchParams.get("uuid")
-
-	if (!uuid) return new NextResponse("uuid is required", { status: 400 })
-
 	return await getStories({ userId: session.session.userId })
-		.andThen((stories) => parseZodSchema(storiesSchema, stories))
+		.andThen((stories) => {
+			console.log(stories)
+			return parseZodSchema(storiesSchema, stories)
+		})
 		.match(
 			(stories) => NextResponse.json(stories, { status: 200 }),
 			(e) => {
